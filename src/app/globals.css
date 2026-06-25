@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: oklch(98.4% 0.003 247.858);
+  --foreground: oklch(20.8% 0.042 265.755);
 }
 
 @theme inline {
@@ -12,12 +12,20 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Background: bg-slate-50
+Cards: bg-white
+Primary/CTA: bg-indigo-600
+Accent: indigo-500
+Text: text-slate-900
+Muted Text: text-slate-500
+Borders: border-slate-200 */
+/* 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background:oklch(98.4% 0.003 247.858)
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   background: var(--background);
