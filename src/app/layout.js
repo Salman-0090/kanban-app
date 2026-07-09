@@ -1,3 +1,4 @@
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 
 export default function RootLayout({ children }) {
@@ -6,7 +7,9 @@ export default function RootLayout({ children }) {
       lang="en"
       className="h-full antialiased">
       <body className="min-h-full flex flex-col">
+        <SessionProvider>
         {children}
+        </SessionProvider>
         </body>
     </html>
   );
