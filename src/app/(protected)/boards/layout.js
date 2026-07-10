@@ -1,12 +1,11 @@
-import { auth } from "@/app/_lib/auth";
-import { redirect } from "next/navigation"
+import Navbar from "@/app/_components/Navbar";
+
 
 export default async function ProtectedLayout({children}) {
-    const session = await auth()
-    console.log(session)
-    if(!session) redirect("/login")
+
     return (
-        <div>
+        <div className="text-white bg-stone-800">
+            <Navbar />
             <main>{children}</main>
         </div>
     )
