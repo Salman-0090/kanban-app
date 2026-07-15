@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { auth } from "./auth"
-import { createBoard, createCard } from "./data-service"
+import { createBoard, createCard, updateCard } from "./data-service"
 import { supabase } from "./supabase"
 
 export async function createBoardAction(formData) {
@@ -25,3 +25,10 @@ export async function createCardAction(formData) {
         await createCard(columnId, title, position)   
         revalidatePath("/boards/[boardId]", "page") 
 }   
+
+export async function updateCardAction(formData) {
+    const description = formData.get("description")
+    const id = formData.get("id")
+    await updateCard(id, description)
+    revalidatePath("/boards/[boardId]", "page") 
+}
