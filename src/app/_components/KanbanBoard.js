@@ -3,7 +3,8 @@
 import { useState } from "react";
 import CreateCardForm from "./CreateCardForm";
 import CardModel from "./CardModel";
-export default function KanbanBoard({columns}) {
+import CreateColumnForm from "./CreateColumnForm";
+export default function KanbanBoard({columns, boardId}) {
     const [selectCard, setSelectCard] = useState(null)
 
     function handleClick(card) {
@@ -15,7 +16,7 @@ export default function KanbanBoard({columns}) {
         {columns.map((column) => (
           <div
             key={column.id}
-            className="bg-gray-100 rounded-xl p-4 min-w-[280px]"
+            className="bg-gray-100 rounded-xl p-4 min-w-[280px] min-h-[280px]"
           >
             <h2 className="font-medium mb-4 text-black">{column.name}</h2>
         
@@ -35,6 +36,7 @@ export default function KanbanBoard({columns}) {
           </div>
         ))}
         {selectCard && <CardModel card={selectCard} onClose={()=> setSelectCard(null)}/>}
+          <CreateColumnForm columns={columns} boardId={boardId} />
       </div>
     )
 }

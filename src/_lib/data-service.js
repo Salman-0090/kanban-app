@@ -65,6 +65,17 @@ export async function updateCard(id, description) {
   if (error) throw new Error(error.message)
 }
 
+export async function deleteCard(id) {
+  const {error} = await supabase
+  .from("cards")
+  .delete()
+  .eq("id", id)
+    console.log("error:", error)  // ← add this
+  
+    if (error) throw new Error(error.message)
+
+}
+
 export async function updateCardPosition(id, columnId, position) {
       const {error} = await supabase
       .from("cards")
