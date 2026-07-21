@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { auth } from "./auth"
-import { createBoard, createCard, createColumn, deleteCard, updateCard } from "./data-service"
+import { createBoard, createCard, createColumn, deleteCard, updateCard, updateCardPosition } from "./data-service"
 import { supabase } from "./supabase"
 
 export async function createBoardAction(formData) {
@@ -56,4 +56,9 @@ export async function deleteCardAction(formData) {
    
     await deleteCard(id)
     revalidatePath("/boards/[boardId]", "page")
+}
+
+
+export async function updateCardPositionAction(id, columnId, position) {
+  await updateCardPosition(id, columnId, position)
 }
