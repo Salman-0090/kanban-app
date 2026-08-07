@@ -10,6 +10,8 @@ import DraggableCard from "./DraggableCard";
 import { arrayMove } from "@dnd-kit/sortable"
 import DroppableColumn from "./DroppableColumn"
 import { updateCardPositionAction } from "@/_lib/action";
+import Button from "./Buttons";
+import DeleteColumnForm from "./DeleteColumnForm";
 
 export default function KanbanBoard({columns, boardId}) {
 const [selectCard, setSelectCard] = useState(null)
@@ -25,6 +27,9 @@ const [activeCard, setActiveCard] = useState(null)
     .flatMap(col => col.cards)
     .find(card => card.id === event.active.id)
   setActiveCard(card)
+}
+function handleDeleteColumn(columnId) {
+  setLocalColumns(prev => prev.filter(col => col.id !== columnId))
 }
 
 async function handleDragEnd(event) {
@@ -91,7 +96,7 @@ async function handleDragEnd(event) {
         {localColumns.map((column) => (
           <div
             key={column.id}
-            className="rounded-xl p-4 min-w-[280px] min-h-[280px]  border border-gray-300"
+            className="rounded-xl p-4 min-w-[280px] min-h-[280px]  border border-gray-300 flex flex-col"
           >
             <h2 className="font-medium mb-4">{column.name}</h2>
             <SortableContext items={column.cards.map((card)=>card.id)} strategy={verticalListSortingStrategy}>
@@ -111,6 +116,8 @@ async function handleDragEnd(event) {
           </SortableContext>
 
             <CreateCardForm  columnId={column.id}/>
+            
+            <DeleteColumnForm columnId={column.id} onDelete={handleDeleteColumn}/>
           </div>
         ))}
         {selectCard && <CardModel card={selectCard} onClose={()=> setSelectCard(null)}/>}

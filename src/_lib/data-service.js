@@ -112,3 +112,12 @@ export async function getColumns(boardId){
     if(error) throw new Error(error.message)
       return data
 }
+
+export async function deleteColumn(id) {
+  const { error } = await supabase
+  .from("columns")
+  .delete()
+  .eq("id", id) 
+
+  if(error) throw new Error(error.message)
+}

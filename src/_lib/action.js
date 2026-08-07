@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { auth } from "./auth"
-import { createBoard, createCard, createColumn, deleteCard, updateCard, updateCardPosition } from "./data-service"
+import { createBoard, createCard, createColumn, deleteCard, deleteColumn, updateCard, updateCardPosition } from "./data-service"
 import { supabase } from "./supabase"
 
 export async function createBoardAction(formData) {
@@ -49,11 +49,7 @@ export async function updateCardAction(formData) {
 }
 
 export async function deleteCardAction(formData) {
-      console.log("deleteCardAction running")
-      console.log("formData entries:", [...formData.entries()]) // ← add this
-  const id = formData.get("id")
-  console.log("id:", id)
-   
+  const id = formData.get("columnId")
     await deleteCard(id)
     revalidatePath("/boards/[boardId]", "page")
 }
@@ -61,4 +57,11 @@ export async function deleteCardAction(formData) {
 
 export async function updateCardPositionAction(id, columnId, position) {
   await updateCardPosition(id, columnId, position)
+}
+
+export async function deleteColumnAction(formData) {
+    const id = formData.get("columnId")
+    await deleteColumn(id)
+    console.log(id)
+    revalidatePath("/boards/[boardId]", "page")
 }

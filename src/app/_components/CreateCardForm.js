@@ -10,7 +10,7 @@ export default function CreateCardForm({columnId}) {
     return (
         
             <div>
-                <Button className="mt-4" onClick={()=> setIsOpen(!isOpen)}>Add Card</Button>
+                <Button className="mt-4 mb-4" onClick={()=> setIsOpen(!isOpen)}>Add Card</Button>
                 {
                     isOpen && (
                     <form action={createCardAction} className="space-y-2 space-x-2 mt-2" onSubmit={()=> setIsOpen(false)} >

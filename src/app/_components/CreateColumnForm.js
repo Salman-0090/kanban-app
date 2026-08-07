@@ -16,10 +16,9 @@ export default function CreateColumnForm({ boardId }) {
             <input className="border border-rounded-md" type="text" name="name" placeholder="add column name" required/> 
             <Button type="submit">Create</Button>
 
-        </form>)
-                    
-                
+        </form>)      
             )}
+    
         </div>
     )
 }
