@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CreateCardForm from "./CreateCardForm";
 import CardModel from "./CardModel";
 import CreateColumnForm from "./CreateColumnForm";
@@ -12,7 +12,7 @@ import DroppableColumn from "./DroppableColumn"
 import { updateCardPositionAction } from "@/_lib/action";
 
 export default function KanbanBoard({columns, boardId}) {
-    const [selectCard, setSelectCard] = useState(null)
+const [selectCard, setSelectCard] = useState(null)
 const [localColumns, setLocalColumns] = useState(columns)
 const [activeCard, setActiveCard] = useState(null)
 
@@ -91,21 +91,20 @@ async function handleDragEnd(event) {
         {localColumns.map((column) => (
           <div
             key={column.id}
-            className="bg-gray-100 rounded-xl p-4 min-w-[280px] min-h-[280px]"
+            className="rounded-xl p-4 min-w-[280px] min-h-[280px]  border border-gray-300"
           >
-            <h2 className="font-medium mb-4 text-black">{column.name}</h2>
+            <h2 className="font-medium mb-4">{column.name}</h2>
             <SortableContext items={column.cards.map((card)=>card.id)} strategy={verticalListSortingStrategy}>
-            <div className="flex flex-col gap-2 text-black">
+            <div className="flex flex-col gap-2">
 
               <DroppableColumn column={column}>
               {column.cards.map((card) => (
                 <DraggableCard
                   key={card.id}
                   card={card}
-                  className="bg-white border rounded-lg p-3 text-sm text-black"
                 onClick={()=> handleClick(card)} >
                   {card.title}
-                </DraggableCard>
+                </DraggableCard>  
               ))}
               </DroppableColumn>
             </div>
