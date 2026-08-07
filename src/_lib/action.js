@@ -59,9 +59,8 @@ export async function updateCardPositionAction(id, columnId, position) {
   await updateCardPosition(id, columnId, position)
 }
 
-export async function deleteColumnAction(formData) {
-    const id = formData.get("columnId")
-    await deleteColumn(id)
-    console.log(id)
-    revalidatePath("/boards/[boardId]", "page")
+export async function deleteColumnAction(columnId) {
+   
+    await deleteColumn(columnId)
+    
 }
