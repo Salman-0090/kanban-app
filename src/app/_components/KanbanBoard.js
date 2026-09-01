@@ -32,6 +32,11 @@ function handleDeleteColumn(columnId) {
   setLocalColumns(prev => prev.filter(col => col.id !== columnId))
 }
 
+function handleUndoDelete(columnId)  {
+  setLocalColumns(columns)
+}
+
+
 async function handleDragEnd(event) {
   setActiveCard(null)
   const { active, over } = event
@@ -117,7 +122,7 @@ async function handleDragEnd(event) {
 
             <CreateCardForm  columnId={column.id}/>
             
-            <DeleteColumnForm columnId={column.id} onDelete={handleDeleteColumn}/>
+            <DeleteColumnForm columnId={column.id} onDelete={handleDeleteColumn} onUndo={handleUndoDelete}/>
           </div>
         ))}
         {selectCard && <CardModel card={selectCard} onClose={()=> setSelectCard(null)}/>}

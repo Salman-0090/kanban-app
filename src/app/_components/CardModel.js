@@ -14,7 +14,7 @@ export default function CardModel({card, onClose}) {
            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl p-6 z-50 w-[500px] shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="font-medium text-lg text-black">{card.title}</h2>
-          <button onClick={onClose} className="text-gray-500">✕</button>
+          <Button onClick={onClose} className="text-gray-500">✕</Button>
         </div>
 
     

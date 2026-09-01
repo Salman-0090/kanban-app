@@ -1,19 +1,32 @@
-import { deleteColumnAction } from "@/_lib/action";
-import Button from "./Buttons";
+"use client"  
+import { useState } from "react"  
+import { deleteColumnAction } from "@/_lib/action"
+import Button from "./Buttons"
 
+export default function DeleteColumnForm({ columnId, onDelete, onUndo }) {
+ 
+  const [isDeleting, setIsDeleting] = useState(false)
 
-export default function DeleteColumnForm({columnId, onDelete}) {
-    async function handleSubmit(e) {
-        e.preventDefault()
-        onDelete(columnId)
-        await deleteColumnAction(columnId)
+  async function handleSubmit(e) {  
+    e.preventDefault()
+    setIsDeleting(true)
+    onDelete(columnId)
+
+    try {
+      await deleteColumnAction(columnId)
+    } catch (error) {
+      onUndo(columnId)
+      alert("Something went wrong! Column was not deleted.")
+    } finally {
+      setIsDeleting(false)
     }
-        return (
-            <form onSubmit={handleSubmit}>
-            <input type="hidden" name="columnId" value={columnId} /> 
-            <Button type="submit" formAction={deleteColumnAction}>
-                DeleteColumn
-            </Button>
-        </form>
-        )
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Button type="submit" disabled={isDeleting}>
+        {isDeleting ? "Deleting..." : "Delete Column"}
+      </Button>
+    </form>
+  )
 }

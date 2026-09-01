@@ -70,7 +70,7 @@ export async function deleteCard(id) {
   .from("cards")
   .delete()
   .eq("id", id)
-    console.log("error:", error)  // ← add this
+    console.log("error:", error)  
   
     if (error) throw new Error(error.message)
 

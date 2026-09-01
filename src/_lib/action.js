@@ -49,7 +49,7 @@ export async function updateCardAction(formData) {
 }
 
 export async function deleteCardAction(formData) {
-  const id = formData.get("columnId")
+  const id = formData.get("id")
     await deleteCard(id)
     revalidatePath("/boards/[boardId]", "page")
 }
@@ -60,7 +60,9 @@ export async function updateCardPositionAction(id, columnId, position) {
 }
 
 export async function deleteColumnAction(columnId) {
-   
+   try {
     await deleteColumn(columnId)
-    
+   } catch (error) {
+    throw new Error(error.message)
+   }
 }
