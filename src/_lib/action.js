@@ -28,9 +28,8 @@ export async function createColumnAction(formData) {
 
 
 
-export async function createCardAction(formData) {
-        const title = formData.get("title")
-        const columnId = formData.get("columnId")
+export async function createCardAction(columnId, title) {
+       
         // count existing cards in this column
         const { count } = await supabase
         .from("cards")
@@ -38,18 +37,15 @@ export async function createCardAction(formData) {
         .eq("column_id", columnId) 
         const position = count + 1
         await createCard(columnId, title, position)   
-        revalidatePath("/boards/[boardId]", "page") 
 }   
 
-export async function updateCardAction(formData) {
-    const description = formData.get("description")
-    const id = formData.get("id")
+export async function updateCardAction() {
+    
     await updateCard(id, description)
     revalidatePath("/boards/[boardId]", "page") 
 }
 
-export async function deleteCardAction(formData) {
-  const id = formData.get("id")
+export async function deleteCardAction(id) {
     await deleteCard(id)
     revalidatePath("/boards/[boardId]", "page")
 }

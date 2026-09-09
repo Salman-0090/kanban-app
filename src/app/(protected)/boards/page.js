@@ -5,7 +5,7 @@ import Link from "next/link";
 import CreateBoardForm from "@/app/_components/CreateBoardForm";
 
 export default async function Page() {
-    const session = await auth()
+  const session = await auth()
   const boards = await getBoards(session?.user?.email)
   console.log(boards)
     return (

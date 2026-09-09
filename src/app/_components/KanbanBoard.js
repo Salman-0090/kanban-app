@@ -12,15 +12,85 @@ import DroppableColumn from "./DroppableColumn"
 import { updateCardPositionAction } from "@/_lib/action";
 import Button from "./Buttons";
 import DeleteColumnForm from "./DeleteColumnForm";
+import { useRealtimeBoard } from "../_hooks/useRealtimeBoard";
 
 export default function KanbanBoard({columns, boardId}) {
 const [selectCard, setSelectCard] = useState(null)
 const [localColumns, setLocalColumns] = useState(columns)
 const [activeCard, setActiveCard] = useState(null)
 
+//real time board update 
+function handleRealtimeUpdate(payload) {
+  const {eventType, new: newRecord, old: oldRecord} = payload
+
+  if(eventType === "INSERT") {
+    setLocalColumns(prev=> prev.map(col => {
+      if(col.id === newRecord.column_id) {
+        const exists = col.cards.some(c => c.id === newRecord.id)
+        if(exists) return col
+        return {...col, cards: [...col.cards, newRecord]}
+      }
+      return col
+    }))
+  }
+
+  if(eventType === "UPDATE") {
+    setLocalColumns(prev=> prev.map(col=> ({
+      ...col, 
+      cards: col.cards
+      .filter(c => c.id  !== newRecord.id)
+      .concat(col.id === newRecord.column_id ? [newRecord] : [])
+      .sort((a, b)=> a.position - b.position)
+    })))
+  }
+
+  if(eventType === "DELETE") {
+    setLocalColumns(prev => prev.map(col => ({
+      ...col,
+      cards: col.cards.filter(c => c.id !== oldRecord.id)
+    })))
+  }
+  
+}
+useRealtimeBoard(boardId, handleRealtimeUpdate)
+
     function handleClick(card) {      
     setSelectCard(card)
   }
+  
+  function handleDeleteCard(cardId) {
+  setLocalColumns(prev => prev.map(col => ({
+    ...col,
+    cards: col.cards.filter(c => c.id !== cardId)
+  })))
+  setSelectCard(null)  
+}
+
+function handleUpdateCard(cardId, description) {
+  setLocalColumns(prev => prev.map(col => ({
+    ...col,
+    cards: col.cards.map(c => 
+      c.id === cardId ? { ...c, description } : c
+    )
+  })))
+}
+
+function handleAddCard(columnId, title) {
+  const newCard = {
+    id: crypto.randomUUID(),
+    title,
+    description: null,
+    column_id: columnId,
+    position:localColumns.find(col=> col.id === columnId)?.cards.length + 1
+  }
+    setLocalColumns(prev => prev.map(col => {
+      if(col.id === columnId) {
+        return {...col, cards:[...col.cards, newCard]}
+      }
+      return col
+    }))
+ 
+} 
 
   function handleDragStart(event) {
  const card = localColumns
@@ -120,12 +190,12 @@ async function handleDragEnd(event) {
             </div>
           </SortableContext>
 
-            <CreateCardForm  columnId={column.id}/>
+            <CreateCardForm  columnId={column.id} onAddCard={handleAddCard}/>
             
             <DeleteColumnForm columnId={column.id} onDelete={handleDeleteColumn} onUndo={handleUndoDelete}/>
           </div>
         ))}
-        {selectCard && <CardModel card={selectCard} onClose={()=> setSelectCard(null)}/>}
+        {selectCard && <CardModel card={selectCard} onClose={()=> setSelectCard(null)} onDelete={handleDeleteCard} onUpdate={handleUpdateCard}/>}
           <CreateColumnForm columns={columns} boardId={boardId} />
       </div>
           <DragOverlay>
