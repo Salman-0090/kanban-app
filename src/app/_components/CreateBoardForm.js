@@ -3,15 +3,28 @@ import { useState } from "react"
 import Button from "./Buttons"
 import { createBoardAction } from "@/_lib/action"
 
-export default function CreateBoardForm() {
+export default function CreateBoardForm({onAddBoard}) {
     const [isOpen, setIsOpen] = useState(false)
+    const [name, setName] = useState("");
+
+  async  function handleSubmit(e) {
+        e.preventDefault()
+        if(!name.trim()) return 
+
+        setIsOpen(false)
+        onAddBoard(name)
+        setName("")
+
+        await createBoardAction(name)
+    }
+
     return (
         <div>
-            <Button  variant="primary" onClick={()=> setIsOpen(!isOpen)}>+ New Board</Button>
+            <Button  variant="primary" className="mb-4" onClick={()=> setIsOpen(!isOpen)}>+ New Board</Button>
 
        { isOpen &&( 
-            <form action={createBoardAction} onSubmit={()=> setIsOpen(false)} className="space-x-4 mt-2">
-                <input type="text" name="name" placeholder="Enter board name"  
+            <form onSubmit={handleSubmit} className="space-x-4 mt-2">
+                <input type="text" value={name} placeholder="Enter board name" onChange={(e)=> setName(e.target.value)} 
                 className="border rounded px-3 py-2 text-sm" required/>
                 <Button type="submit">Create</Button>
             </form>

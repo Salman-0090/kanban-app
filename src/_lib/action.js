@@ -2,12 +2,11 @@
 
 import { revalidatePath } from "next/cache"
 import { auth } from "./auth"
-import { createBoard, createCard, createColumn, deleteCard, deleteColumn, updateCard, updateCardPosition } from "./data-service"
+import { createBoard, createCard, createColumn, deleteBoard, deleteCard, deleteColumn, updateCard, updateCardPosition } from "./data-service"
 import { supabase } from "./supabase"
 
-export async function createBoardAction(formData) {
+export async function createBoardAction(name) {
     const session = await auth()
-    const name = formData.get("name")
     if(!name) throw new Error("Board name is required")
         await createBoard(name, session?. user?.email)
     revalidatePath("/boards")
@@ -58,6 +57,14 @@ export async function updateCardPositionAction(id, columnId, position) {
 export async function deleteColumnAction(columnId) {
    try {
     await deleteColumn(columnId)
+   } catch (error) {
+    throw new Error(error.message)
+   }
+}
+
+export async function deleteBoardAction(boardId) {
+ try {
+    await deleteBoard(boardId)
    } catch (error) {
     throw new Error(error.message)
    }

@@ -32,8 +32,6 @@ export default function CreateCardForm({columnId, onAddCard}) {
                     </form>
                     
                 )}
-              
-
             </div>
        
     )

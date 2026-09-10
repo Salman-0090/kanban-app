@@ -26,7 +26,10 @@ function handleRealtimeUpdate(payload) {
   if(eventType === "INSERT") {
     setLocalColumns(prev=> prev.map(col => {
       if(col.id === newRecord.column_id) {
-        const exists = col.cards.some(c => c.id === newRecord.id)
+        const exists = col.cards.some(c => 
+        c.id === newRecord.id ||  // real id match
+        (c.title === newRecord.title && c.column_id === newRecord.column_id)  // ← add this
+      )
         if(exists) return col
         return {...col, cards: [...col.cards, newRecord]}
       }
