@@ -12,14 +12,15 @@ export async function createBoardAction(name) {
     revalidatePath("/boards")
 }
 
-export async function createColumnAction(formData) {
-        const boardId = formData.get("boardId")
-        const name = formData.get("name")
-         const { count } = await supabase
-        .from("columns")
-        .select("*", {count:"exact"})
-        .eq("boardId", boardId)
-        const position = count + 1
+export async function createColumnAction(boardId, name, position) {
+console.log("boardId:", boardId)  // ← add this
+  console.log("name:", name)
+  console.log("position:", position)
+        //  const { count } = await supabase
+        // .from("columns")
+        // .select("*", {count:"exact"})
+        // .eq("boardId", boardId)
+        // const position = count + 1
         await createColumn(boardId, name, position )
         revalidatePath("/boards/[boardId]", "page") 
 }

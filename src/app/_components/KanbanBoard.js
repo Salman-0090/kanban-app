@@ -199,7 +199,7 @@ async function handleDragEnd(event) {
           </div>
         ))}
         {selectCard && <CardModel card={selectCard} onClose={()=> setSelectCard(null)} onDelete={handleDeleteCard} onUpdate={handleUpdateCard}/>}
-          <CreateColumnForm columns={columns} boardId={boardId} />
+          <CreateColumnForm setLocalColumns={setLocalColumns} localColumns={localColumns} boardId={boardId} />
       </div>
           <DragOverlay>
       {activeCard && (
