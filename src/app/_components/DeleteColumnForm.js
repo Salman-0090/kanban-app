@@ -24,7 +24,7 @@ export default function DeleteColumnForm({ columnId, onDelete, onUndo }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Button type="submit" disabled={isDeleting}>
+      <Button type="submit" disabled={isDeleting} className="mt-3">
         {isDeleting ? "Deleting..." : "Delete Column"}
       </Button>
     </form>

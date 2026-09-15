@@ -22,7 +22,7 @@ export default function DeleteBoardForm({board, onDeleteBoard, onUndoDelete}) {
     
     return (
         <form onSubmit={handleSubmit}>
-            <Button type="submit" disabled={isDeleting}>{isDeleting ? "Deleting..." : "Delete Board"}</Button>
+            <Button type="submit" variant="gray" disabled={isDeleting}>{isDeleting ? "Deleting..." : "Delete Board"}</Button>
         </form>
     )
 }

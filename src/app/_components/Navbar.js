@@ -5,7 +5,7 @@ import Image from "next/image";
 export default async function Navbar()  {
     const session = await auth()
     return (
-        <nav className="flex p-4  justify-between items-center bg-stone-700">
+        <nav className="flex p-4  justify-between items-center bg-stone-900">
          <Link href={session ? "/boards" : "/"}>
             <span>Kanban</span>
          </Link>

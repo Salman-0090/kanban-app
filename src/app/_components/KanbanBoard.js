@@ -170,15 +170,15 @@ async function handleDragEnd(event) {
 }
     return (
       <DndContext onDragEnd={handleDragEnd}  onDragStart={handleDragStart} >
-         <div className="flex gap-4 overflow-x-auto">
+         <div className="flex flex-wrap ml-8 gap-4 overflow-x-auto ">
         {localColumns.map((column) => (
           <div
             key={column.id}
-            className="rounded-xl p-4 min-w-[280px] min-h-[280px]  border border-gray-300 flex flex-col"
+            className="rounded-xl p-2 border border-gray-300 flex flex-col min-w-[220px]"
           >
-            <h2 className="font-medium mb-4">{column.name}</h2>
+            <h2 className="text-sm mb-4">{column.name}</h2>
             <SortableContext items={column.cards.map((card)=>card.id)} strategy={verticalListSortingStrategy}>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-6 p-1">
 
               <DroppableColumn column={column}>
               {column.cards.map((card) => (

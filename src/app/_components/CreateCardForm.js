@@ -27,7 +27,7 @@ export default function CreateCardForm({columnId, onAddCard}) {
                         <input type="text" value={title} 
                         placeholder="Enter Card title"  
                         onChange={(e)=> setTitle(e.target.value)}
-                className="border rounded px-3 py-2 text-sm bg-white text-black" required/>
+                className="border rounded p-1 text-sm bg-blue-100 text-black" required/>
                 <Button type="submit">Create</Button>
                     </form>
                     

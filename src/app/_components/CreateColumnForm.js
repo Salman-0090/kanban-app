@@ -17,23 +17,30 @@ export default function CreateColumnForm({setLocalColumns, localColumns, boardId
         cards: []
        }
        setLocalColumns((prev)=> [...prev, newColumn])
+       setName("")
       await  createColumnAction(boardId, name, newColumn.position)
+
     }
     
     return (
         <div className="min-w-[280px] space-y-2">
-            <Button onClick={()=> setIsOpen(!isOpen)}>+ Add Column </Button>
+            <div className="flex items-center">
+             <Button className="text-base" onClick={()=> setIsOpen(!isOpen)}>+ Add Column </Button>
+             </div>
+        <div>
+           
             {(
                 
             isOpen && (
             <form className="space-x-2" onSubmit={handleSubmit}>
             <input type="hidden" name="boardId" value={boardId}/>
-            <input className="border border-rounded-md" type="text" value={name} placeholder="add column name" onChange={e=> setName(e.target.value)} required/> 
+            <input className="border rounded-md bg-blue-100 p-1 text-black" type="text" value={name} placeholder="add column name" onChange={e=> setName(e.target.value)} required/> 
             <Button type="submit">Create</Button>
 
         </form>)      
             )}
     
+        </div>
         </div>
     )
 }
