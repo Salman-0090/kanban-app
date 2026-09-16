@@ -10,12 +10,12 @@ export default function CreateBoardForm({onAddBoard}) {
   async  function handleSubmit(e) {
         e.preventDefault()
         if(!name.trim()) return 
-
         setIsOpen(false)
         onAddBoard(name)
         setName("")
-
-        await createBoardAction(name)
+        const tempId = onAddBoard(name)
+        const realBoard = await createBoardAction(name)
+        onReplaceBoard(tempId, realBoard)
     }
 
     return (
@@ -26,11 +26,9 @@ export default function CreateBoardForm({onAddBoard}) {
             <form onSubmit={handleSubmit} className="space-x-4 mt-2">
                 <input type="text" value={name} placeholder="Enter board name" onChange={(e)=> setName(e.target.value)} 
                 className="border rounded px-3 py-2 text-sm" required/>
-                <Button type="submit">Create</Button>
+                <Button type="submit" className="mb-4">Create</Button>
             </form>
         )}
-
-        
         </div>
 
     )

@@ -13,6 +13,11 @@ function handleAddBoard(name) {
             owner_email:userEmail,
         }
     setLocalBoards(prev=> [...prev, newBoard])
+    return newBoard.id
+}
+
+function handleReplaceBoard(tempId, realBoard) {
+    setLocalBoards(prev=> prev.map(b => b.id === tempId ? realBoard : b))
 }
 
 function handleDeleteBoard(boardId) { 
@@ -24,7 +29,7 @@ function handleUndoDelete(board) {
 }
     return (
       <div>
-      <CreateBoardForm onAddBoard={handleAddBoard} />
+      <CreateBoardForm onAddBoard={handleAddBoard} onReplaceBoard={handleReplaceBoard}/>
       <div className="grid grid-cols-3 gap-4">
         <Boards
           localBoards={localBoards}

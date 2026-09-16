@@ -1,6 +1,6 @@
 const variants = {
     primary: "bg-indigo-500 hover:bg-indigo-600 text-white rounded-md text-sm",
-    gray: "bg-gray-900 hover:bg-gray-800 text-gray-400 rounded-md text-sm"
+    gray: "bg-gray-700 hover:bg-gray-800 text-gray-400 rounded-md text-sm"
 }
 
 export default function Button({children, className="", onClick, variant="primary", as: Component = "button", href, type}) {

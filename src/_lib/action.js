@@ -8,8 +8,9 @@ import { supabase } from "./supabase"
 export async function createBoardAction(name) {
     const session = await auth()
     if(!name) throw new Error("Board name is required")
-        await createBoard(name, session?. user?.email)
+    const board =  await createBoard(name, session?. user?.email)
     revalidatePath("/boards")
+    return board
 }
 
 export async function createColumnAction(boardId, name, position) { 

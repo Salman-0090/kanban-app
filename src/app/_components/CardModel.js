@@ -40,11 +40,12 @@ export default function CardModel({card, onClose, onDelete, onUpdate}) {
           className="w-full border rounded p-2 text-sm text-black min-h-[100px]"
         />
         <input name="id" type="hidden" value={card.id}/>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded text-sm cursor-pointer" type="submit" onClick={()=> setIsOpen(!isOpen)}>Save</button>
-          </form>
-          <form>
+          
+
              <input name="id" type="hidden"  value={card.id}/>
-          <button onClick={handleDelete} className="bg-red-500 text-white px-4 py-2 rounded text-sm cursor-pointer">Delete card</button>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded text-sm cursor-pointer" type="submit" onClick={()=> setIsOpen(!isOpen)}>Save</button>
+             
+          <button type="button" onClick={handleDelete} className="bg-red-500 text-white px-4 py-2 rounded text-sm cursor-pointer">Delete card</button>
           </form>
         </div>
       </div>
