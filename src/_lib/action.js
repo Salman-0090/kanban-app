@@ -14,22 +14,24 @@ export async function createBoardAction(name) {
 }
 
 export async function createColumnAction(boardId, name, position) { 
-        await createColumn(boardId, name, position )
+    const column = await createColumn(boardId, name, position )
         revalidatePath("/boards/[boardId]", "page") 
+        return column
 }
 
 
 
 
 export async function createCardAction(columnId, title) {
-       
+       console.log("columnId:", columnId) 
         // count existing cards in this column
         const { count } = await supabase
         .from("cards")
         .select("*", {count: "exact"})
         .eq("column_id", columnId) 
         const position = count + 1
-        await createCard(columnId, title, position)   
+     const card =   await createCard(columnId, title, position)   
+     return card
 }   
 
 export async function updateCardAction(id, description) {

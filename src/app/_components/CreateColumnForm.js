@@ -3,24 +3,30 @@ import { createColumnAction } from "@/_lib/action";
 import Button from "./Buttons";
 import { useState } from "react";
 
-export default function CreateColumnForm({setLocalColumns, localColumns, boardId }) {
+export default function CreateColumnForm({setLocalColumns, localColumns, boardId, onReplaceColumn }) {
     const [isOpen, setIsOpen] = useState(false)
     const [name, setName] = useState("")
   async  function handleSubmit(e) {
         e.preventDefault()
-        setIsOpen(false)
+        const columnName = name
+        const position = localColumns.length + 1
        const newColumn = {
         id:crypto.randomUUID(),
         board_id:boardId,
         name,
-        position: localColumns.length + 1,
+        position,
         cards: []
        }
+        setIsOpen(false)
        setLocalColumns((prev)=> [...prev, newColumn])
        setName("")
-      await  createColumnAction(boardId, name, newColumn.position)
+       const tempId = newColumn.id
+      const realColumn = await  createColumnAction(boardId, name, newColumn.position)
+       onReplaceColumn(tempId, realColumn)
 
     }
+
+
     
     return (
         <div className="min-w-[280px] space-y-2">

@@ -11,10 +11,11 @@ export default function CreateCardForm({columnId, onAddCard}) {
     async function handleSubmit(e) {
         e.preventDefault()
         if(!title.trim()) return
-        setIsOpen(false)
-        onAddCard(columnId, title)
+        setIsOpen(false) 
         setTitle("")
-        await createCardAction(columnId, title)
+        const tempId = onAddCard(columnId, title)
+        const realCard =  await createCardAction(columnId, title)
+        onReplaceCard(tempId, realCard)
     }
     return (
         

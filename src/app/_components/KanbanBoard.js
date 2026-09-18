@@ -92,8 +92,18 @@ function handleAddCard(columnId, title) {
       }
       return col
     }))
- 
+ return newCard.id
 } 
+
+function handleReplaceCard(tempId, realCard) {
+  setLocalColumns(prev => prev.map(col => ({
+    ...col,
+    cards: col.cards.map(c => 
+      c.id === tempId ? realCard : c
+    )
+  })))
+}
+
 
   function handleDragStart(event) {
  const card = localColumns
@@ -101,6 +111,15 @@ function handleAddCard(columnId, title) {
     .find(card => card.id === event.active.id)
   setActiveCard(card)
 }
+
+function handleReplaceColumn(tempId, realColumn) {
+     setLocalColumns(prev=> prev.map(col=> 
+      col.id === tempId 
+      ? {...realColumn, cards: realColumn.cards ?? []}
+      : col
+     ))
+} 
+
 function handleDeleteColumn(columnId) {
   setLocalColumns(prev => prev.filter(col => col.id !== columnId))
 }
@@ -193,13 +212,13 @@ async function handleDragEnd(event) {
             </div>
           </SortableContext>
 
-            <CreateCardForm  columnId={column.id} onAddCard={handleAddCard}/>
+            <CreateCardForm  columnId={column.id} onAddCard={handleAddCard} onReplaceCard={handleReplaceCard}/>
             
             <DeleteColumnForm columnId={column.id} onDelete={handleDeleteColumn} onUndo={handleUndoDelete}/>
           </div>
         ))}
         {selectCard && <CardModel card={selectCard} onClose={()=> setSelectCard(null)} onDelete={handleDeleteCard} onUpdate={handleUpdateCard}/>}
-          <CreateColumnForm setLocalColumns={setLocalColumns} localColumns={localColumns} boardId={boardId} />
+          <CreateColumnForm setLocalColumns={setLocalColumns} localColumns={localColumns} boardId={boardId} onReplaceColumn={handleReplaceColumn} />
       </div>
           <DragOverlay>
       {activeCard && (
