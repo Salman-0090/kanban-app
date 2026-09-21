@@ -1,13 +1,10 @@
-
-import { FcGoogle } from "react-icons/fc";
-import SignInButton from "../_components/SignInButton";
+import SignOutButton from "../_components/SignOutButton";
 
 export default function page() {
     return (
         <main className="min-h-screen flex justify-center items-center">
             <div className="flex items-center gap-3">
-                 <FcGoogle  className="text-4xl"/>
-                <SignInButton />
+                <SignOutButton />
             </div>
         </main>
     )

@@ -13,7 +13,7 @@ export default function CreateColumnForm({setLocalColumns, localColumns, boardId
        const newColumn = {
         id:crypto.randomUUID(),
         board_id:boardId,
-        name,
+        columnName,
         position,
         cards: []
        }
@@ -26,8 +26,6 @@ export default function CreateColumnForm({setLocalColumns, localColumns, boardId
 
     }
 
-
-    
     return (
         <div className="min-w-[280px] space-y-2">
             <div className="flex items-center">
